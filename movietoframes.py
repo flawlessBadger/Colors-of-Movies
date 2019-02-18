@@ -6,15 +6,21 @@ Created on Sun Feb 17 16:14:00 2019
 """
 
 import cv2
-print(cv2.__version__)
-vidcap = cv2.VideoCapture('res/movin/bunny_sample.mp4')
-eachxframes = 10
-success,image = vidcap.read()
-count = 0
-success = True
-while success:
-  if(count%10==0):
-      cv2.imwrite("res/frameout/frame%d.jpg" % count, image)     # save frame as JPEG file
-  success,image = vidcap.read()
-  print ('Read a new frame: '+ str(success))
-  count += 1
+class movie:
+    def __init__(self,path):
+        self.movie = cv2.VideoCapture(path)#res/movin/bunny_sample.mp4
+        success, self.frame = self.movie.read()
+        self.len = int(self.movie.get(cv2.CAP_PROP_FRAME_COUNT))
+        self.count = 0
+    
+    def move(self, frames):
+        for i in range(frames):
+           success, self.frame= self.movie.read()
+           if(not(success)): return False
+           self.count+=1
+        return True
+    def saveFrame(self):
+        cv2.imwrite("res/frameout/frame%d.jpg" % self.count, self.frame)
+        
+    
+    
