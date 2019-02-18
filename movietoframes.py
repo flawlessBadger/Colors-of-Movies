@@ -11,16 +11,24 @@ class movie:
         self.movie = cv2.VideoCapture(path)#res/movin/bunny_sample.mp4
         success, self.frame = self.movie.read()
         self.len = int(self.movie.get(cv2.CAP_PROP_FRAME_COUNT))
-        self.count = 0
+        self.pos = 0
+        
+    def move(self, frame):
+        self.movie.set(1, frame)
+        success, self.frame= self.movie.read()
+        if(not(success)): return False
+        self.pos = frame
+        return True
     
-    def move(self, frames):
+    def step(self, frames):
         for i in range(frames):
            success, self.frame= self.movie.read()
            if(not(success)): return False
-           self.count+=1
+           self.pos+=1
         return True
+    
     def saveFrame(self):
-        cv2.imwrite("res/frameout/frame%d.jpg" % self.count, self.frame)
+        cv2.imwrite("res/frameout/frame%d.jpg" % self.pos, self.frame)
         
     
     
