@@ -115,4 +115,8 @@ dmypy.json
 
 #resources
 *.jpg
+*.png
 *.mp4
+*.DS_Store
+res/.DS_Store
+.DS_Store
